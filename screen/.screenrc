@@ -1,0 +1,4 @@
+escape ^z^z
+hardstatus on
+hardstatus alwayslastline "[%m/%d %02c] %-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+defscrollback 10000
