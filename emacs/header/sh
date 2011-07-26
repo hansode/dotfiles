@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# $Id$
+#
+# Masahito Yoshida <masahito@axsh.net>
+#
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin
+
+
+
+
+exit 0

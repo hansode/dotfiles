@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+#
+# $Id$
+#
+# Masahito Yoshida <masahito@axsh.net>
+#
+
+
+use strict;
+use warnings;
+
