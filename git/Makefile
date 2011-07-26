@@ -1,4 +1,4 @@
 all: gitconfig
 
 gitconfig:
-	cp dot.gitconfig $(HOME)/.$@
+	cp dot.$@ $(HOME)/.$@
