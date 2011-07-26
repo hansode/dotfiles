@@ -1,0 +1,5 @@
+#Protocol 2
+
+Host *
+	StrictHostKeyChecking no
+	TCPKeepAlive yes
