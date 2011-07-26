@@ -3,3 +3,11 @@
 Host *
 	StrictHostKeyChecking no
 	TCPKeepAlive yes
+
+Host github.com
+	User hansode
+	Port 22
+	Hostname github.com
+	IdentityFile ~/.ssh/id_dsa
+	TCPKeepAlive yes
+	IdentitiesOnly yes
