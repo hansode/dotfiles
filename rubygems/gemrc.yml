@@ -9,6 +9,6 @@ gem: --no-rdoc --no-ri
 - http://gems.rubyforge.org/
 - http://gems.github.com
 :bulk_threshold: 1000
-gemhome: __HOME__/.gem/ruby/1.8
-gempath:
-- __HOME__/.gem/ruby/1.8
+#gemhome: __HOME__/.gem/ruby/1.8
+#gempath:
+#- __HOME__/.gem/ruby/1.8
