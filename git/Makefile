@@ -1,4 +1,5 @@
 all: gitconfig
 
 gitconfig:
-	cp dot.$@ $(HOME)/.$@
+	[ -f $(HOME)/.$@ ] && rm -f $(HOME)/.$@ || :
+	[ -L $(HOME)/.$@ ] || ln -s `pwd`/dot.$@ $(HOME)/.$@
