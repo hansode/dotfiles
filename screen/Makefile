@@ -1,4 +1,5 @@
 all: screenrc
 
 screenrc:
-	cp dot.$@ $(HOME)/.$@
+	[ -f $(HOME)/.$@ ] && rm -f $(HOME)/.$@
+	[ -L $(HOME)/.$@ ] || ln -s `pwd`/dot.$@ $(HOME)/.$@
