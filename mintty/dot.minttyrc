@@ -1,0 +1,11 @@
+BoldAsFont=no
+Font=Terminal
+FontHeight=10
+Rows=54
+BackgroundColour=0,0,0
+Scrollbar=none
+Transparency=high
+CursorType=block
+CursorBlinks=no
+RightClickAction=paste
+OpaqueWhenFocused=no
