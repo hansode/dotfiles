@@ -7,3 +7,4 @@
 	diff = auto
 	interactive = auto
 	status = auto
+	grep = auto
