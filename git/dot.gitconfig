@@ -8,3 +8,7 @@
 	interactive = auto
 	status = auto
 	grep = auto
+	ui = auto
+[core]
+	pager = less -R
+	autocrlf = true
