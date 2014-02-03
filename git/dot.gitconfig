@@ -11,4 +11,4 @@
 	ui = auto
 [core]
 	pager = less -R
-	autocrlf = true
+	autocrlf = false
