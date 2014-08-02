@@ -18,12 +18,31 @@ case "${UNAME}" in
   CYGWIN*)
     PATH=${PATH}:${HOME}/packer:/cygdrive/c/Program\ Files/Oracle/VirtualBox
     ;;
+  Darwin)
+    PATH=${PATH}:${HOME}/packer
+    ;;
 esac
 
 export PATH
 export LC_ALL=C
 export LANG=C
 export HISTTIMEFORMAT='%F %T '
+
+case "${UNAME}" in
+  Darwin)
+    export LSCOLORS=gxfxcxdxcxegedabagacad
+    ;;
+esac
+
+#-------------------------------------------------------------------------------
+# Aliases
+#-------------------------------------------------------------------------------
+
+case "${UNAME}" in
+  Darwin)
+    alias ls='ls -FG'
+    ;;
+esac
 
 #-------------------------------------------------------------------------------
 # Prompt
