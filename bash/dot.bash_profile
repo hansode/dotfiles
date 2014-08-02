@@ -1,29 +1,70 @@
 # .bash_profile
 
 # Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+if [[ -f ~/.bashrc ]]; then
+  . ~/.bashrc
 fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin
+#-------------------------------------------------------------------------------
+# Env. Configuration
+#-------------------------------------------------------------------------------
+
+UNAME=${UNAME:-$(uname)}
+PATH=${PATH}:${HOME}/bin
+
+case "${UNAME}" in
+  CYGWIN*)
+    PATH=${PATH}:${HOME}/packer:/cygdrive/c/Program\ Files/Oracle/VirtualBox
+    ;;
+esac
 
 export PATH
 export LC_ALL=C
 export LANG=C
+export HISTTIMEFORMAT='%F %T '
 
-function show_git_branch {
-  if which git >/dev/null; then
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+#-------------------------------------------------------------------------------
+# Prompt
+#-------------------------------------------------------------------------------
+
+function show_git_branch() {
+  type -P git >/dev/null || return 0
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+PS1='\u@\h:\w$(show_git_branch)\$ '
+
+#-------------------------------------------------------------------------------
+# SSH Agent
+#-------------------------------------------------------------------------------
+
+SSH_ENV=${HOME}/.ssh/environment
+SSH_AGETNT_KEYS=${HOME}/.ssh/agent_keys
+
+function start_ssh_agent {
+  ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
+  chmod 0600 ${SSH_ENV}
+  . ${SSH_ENV} > /dev/null
+
+  if [[ -f ${HOME}/.ssh/agent_keys ]]; then
+    while read privkey; do
+      eval ssh-add ${privkey}
+    done < ${SSH_AGETNT_KEYS}
+  else
+     ssh-add
   fi
 }
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(show_git_branch)\$ '
+# Source SSH agent settings if it is already running, otherwise start
+# up the agent proprely.
+if [[ -f "${SSH_ENV}" ]]; then
+  . ${SSH_ENV} > /dev/null
+  # ps ${SSH_AGENT_PID} doesn't work under cywgin
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_ssh_agent
+  }
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(show_git_branch)\$ '
+  start_ssh_agent
 fi
-$(show_git_branch)
-
-export HISTTIMEFORMAT='%F %T '
