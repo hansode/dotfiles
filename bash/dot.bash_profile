@@ -66,7 +66,7 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 SSH_ENV=${HOME}/.ssh/environment
 SSH_AGETNT_KEYS=${HOME}/.ssh/agent_keys
 
-function start_ssh_agent {
+function start_ssh_agent() {
   ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
   chmod 0600 ${SSH_ENV}
   . ${SSH_ENV} > /dev/null
@@ -76,7 +76,7 @@ function start_ssh_agent {
       eval ssh-add ${privkey}
     done < ${SSH_AGETNT_KEYS}
   else
-     ssh-add
+    ssh-add
   fi
 }
 
