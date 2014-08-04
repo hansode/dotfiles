@@ -82,12 +82,16 @@ function start_ssh_agent {
 
 # Source SSH agent settings if it is already running, otherwise start
 # up the agent proprely.
-if [[ -f "${SSH_ENV}" ]]; then
-  . ${SSH_ENV} > /dev/null
-  # ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+
+# forward agent?
+if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+  if [[ -f "${SSH_ENV}" ]]; then
+    . ${SSH_ENV} > /dev/null
+    # ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+      start_ssh_agent
+    }
+  else
     start_ssh_agent
-  }
-else
-  start_ssh_agent
+  fi
 fi
