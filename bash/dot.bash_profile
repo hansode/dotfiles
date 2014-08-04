@@ -16,10 +16,14 @@ PATH=${PATH}:${HOME}/bin
 
 case "${UNAME}" in
   CYGWIN*)
-    PATH=${PATH}:${HOME}/packer:/cygdrive/c/Program\ Files/Oracle/VirtualBox
+    PATH=${PATH}:${HOME}/packer
+    PATH=${PATH}:/cygdrive/c/Program\ Files/Oracle/VirtualBox
+    PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/VMware/VMware\ VIX
+    PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/VMware/VMware\ Workstation
     ;;
   Darwin)
     PATH=${PATH}:${HOME}/packer
+    PATH=${PATH}:/Applications/VMware\ Fusion.app/Contents/Library
     ;;
 esac
 
