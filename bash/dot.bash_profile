@@ -67,8 +67,8 @@ SSH_ENV=${HOME}/.ssh/environment
 SSH_AGETNT_KEYS=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
-  # forwarded agent?
-  [[ -z "${SSH_AUTH_SOCK}" ]] || return 0
+  # remote?
+  [[ -z "${SSH_CLIENT}" ]] || return 0
 
   ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
   chmod 0600 ${SSH_ENV}
