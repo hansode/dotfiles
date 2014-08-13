@@ -75,8 +75,12 @@ function start_ssh_agent() {
   . ${SSH_ENV} > /dev/null
 
   if [[ -f ${HOME}/.ssh/agent_keys ]]; then
+    local privkey=
     while read privkey; do
-      eval ssh-add ${privkey}
+      # expand a file path using "~" or "${HOME}"
+      eval privkey=${privkey}
+      [[ -f "${privkey}" ]] || continue
+      ssh-add ${privkey}
     done < ${SSH_AGETNT_KEYS}
   else
     ssh-add
