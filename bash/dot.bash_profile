@@ -45,6 +45,7 @@ esac
 case "${UNAME}" in
   CYGWIN*)
     alias ls='ls -F --color --show-control-chars'
+    alias screen='screen -U'
     ;;
   Darwin)
     alias ls='ls -FG'
