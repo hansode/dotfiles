@@ -43,6 +43,9 @@ esac
 #-------------------------------------------------------------------------------
 
 case "${UNAME}" in
+  CYGWIN*)
+    alias ls='ls -F --color --show-control-chars'
+    ;;
   Darwin)
     alias ls='ls -FG'
     ;;
