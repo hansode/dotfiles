@@ -46,6 +46,9 @@ case "${UNAME}" in
   CYGWIN*)
     alias ls='ls -F --color --show-control-chars'
     alias screen='screen -U'
+    alias apt-cyg='apt-cyg -u'
+    alias git='/cygdrive/c/cygwin64/bin/git'
+    alias dot="/cygdrive/c/Program\ Files\ \(x86\)/Graphviz2.38/bin/dot.exe"
     ;;
   Darwin)
     alias ls='ls -FG'
