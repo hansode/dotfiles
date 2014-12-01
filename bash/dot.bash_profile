@@ -47,7 +47,9 @@ case "${UNAME}" in
     alias ls='ls -F --color --show-control-chars'
     alias screen='screen -U'
     alias apt-cyg='apt-cyg -u'
-    alias git='/cygdrive/c/cygwin64/bin/git'
+    if [[ -f /cygdrive/c/cygwin64/bin/git ]]; then
+      alias git='/cygdrive/c/cygwin64/bin/git'
+    fi
     alias dot="/cygdrive/c/Program\ Files\ \(x86\)/Graphviz2.38/bin/dot.exe"
     ;;
   Darwin)
