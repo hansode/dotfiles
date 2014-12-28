@@ -20,6 +20,7 @@ case "${UNAME}" in
     PATH=${PATH}:/cygdrive/c/Program\ Files/Oracle/VirtualBox
     PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/VMware/VMware\ VIX
     PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/VMware/VMware\ Workstation
+    PATH=${PATH}:/cygdrive/c/Program\ Files\ \(x86\)/Heroku/bin
     ;;
   Darwin)
     PATH=${PATH}:${HOME}/packer
