@@ -83,7 +83,7 @@ function start_ssh_agent() {
   chmod 0600 ${SSH_ENV}
   . ${SSH_ENV} > /dev/null
 
-  if [[ -f ${HOME}/.ssh/agent_keys ]]; then
+  if [[ -f "${SSH_AGETNT_KEYS}" ]]; then
     local privkey=
     while read privkey; do
       # expand a file path using "~" or "${HOME}"
