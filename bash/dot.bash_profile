@@ -112,18 +112,12 @@ else
 fi
 
 # static ssh agent sock path
-# via http://www.gcd.org/blog/2006/09/100/
 
 ssh_agent_sock=${HOME}/.ssh/agent.sock
 
-if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
-  ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
-  export SSH_AUTH_SOCK=${ssh_agent_sock}
-fi
-
-# via http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
 case "${UNAME}" in
   Darwin)
+    # via http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
     for sock_tmp in \
      /tmp/com.apple.launchd.*/Listeners \
      /tmp/launchd-*/Listeners; do
@@ -131,5 +125,12 @@ case "${UNAME}" in
       ln -fs ${sock_tmp} ${ssh_agent_sock}
       export SSH_AUTH_SOCK=${ssh_agent_sock}
     done
+    ;;
+  *)
+    # via http://www.gcd.org/blog/2006/09/100/
+    if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
+      ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
+      export SSH_AUTH_SOCK=${ssh_agent_sock}
+    fi
     ;;
 esac
