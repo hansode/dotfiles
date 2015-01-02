@@ -73,7 +73,7 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 #-------------------------------------------------------------------------------
 
 SSH_ENV=${HOME}/.ssh/environment
-SSH_AGETNT_KEYS=${HOME}/.ssh/agent_keys
+SSH_AGENT_KEYS=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
   # remote?
@@ -83,14 +83,14 @@ function start_ssh_agent() {
   chmod 0600 ${SSH_ENV}
   . ${SSH_ENV} > /dev/null
 
-  if [[ -f "${SSH_AGETNT_KEYS}" ]]; then
+  if [[ -f "${SSH_AGENT_KEYS}" ]]; then
     local privkey=
     while read privkey; do
       # expand a file path using "~" or "${HOME}"
       eval privkey=${privkey}
       [[ -f "${privkey}" ]] || continue
       ssh-add ${privkey}
-    done < ${SSH_AGETNT_KEYS}
+    done < ${SSH_AGENT_KEYS}
   else
     ssh-add
   fi
