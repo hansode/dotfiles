@@ -72,25 +72,25 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 # SSH Agent
 #-------------------------------------------------------------------------------
 
-SSH_ENV=${HOME}/.ssh/environment
-SSH_AGENT_KEYS=${HOME}/.ssh/agent_keys
+ssh_env=${HOME}/.ssh/environment
+ssh_agent_keys=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
   # remote?
   [[ -z "${SSH_CLIENT}" ]] || return 0
 
-  ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
-  chmod 0600 ${SSH_ENV}
-  . ${SSH_ENV} > /dev/null
+  ssh-agent | sed 's/^echo/#echo/' > ${ssh_env}
+  chmod 0600 ${ssh_env}
+  . ${ssh_env} > /dev/null
 
-  if [[ -f "${SSH_AGENT_KEYS}" ]]; then
+  if [[ -f "${ssh_agent_keys}" ]]; then
     local privkey=
     while read privkey; do
       # expand a file path using "~" or "${HOME}"
       eval privkey=${privkey}
       [[ -f "${privkey}" ]] || continue
       ssh-add ${privkey}
-    done < ${SSH_AGENT_KEYS}
+    done < ${ssh_agent_keys}
   else
     ssh-add
   fi
@@ -99,8 +99,8 @@ function start_ssh_agent() {
 # Source SSH agent settings if it is already running, otherwise start
 # up the agent proprely.
 
-if [[ -f "${SSH_ENV}" ]]; then
-  . ${SSH_ENV} > /dev/null
+if [[ -f "${ssh_env}" ]]; then
+  . ${ssh_env} > /dev/null
   # ps ${SSH_AGENT_PID} doesn't work under cywgin
   ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
     start_ssh_agent
