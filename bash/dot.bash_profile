@@ -68,6 +68,8 @@ function show_git_branch() {
 
 PS1='\u@\h:\w$(show_git_branch)\$ '
 
+# via https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
+
 #-------------------------------------------------------------------------------
 # SSH Agent
 #-------------------------------------------------------------------------------
