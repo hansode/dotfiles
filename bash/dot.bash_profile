@@ -108,3 +108,13 @@ if [[ -f "${SSH_ENV}" ]]; then
 else
   start_ssh_agent
 fi
+
+# static ssh agent sock path
+# via http://www.gcd.org/blog/2006/09/100/
+
+ssh_agent_sock=${HOME}/.ssh/agent.sock
+
+if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
+  ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
+  export SSH_AUTH_SOCK=${ssh_agent_sock}
+fi
