@@ -89,8 +89,3 @@
      (and (string-match "/\(PEAR\|pear\)/" (buffer-file-name))
           (string-match ".php$" (buffer-file-name)))))
   )
-
-;; cake
-(require 'cake)
-(require 'anything-c-cake)
-(setq anything-sources (list anything-c-source-cake))
