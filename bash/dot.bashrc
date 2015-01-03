@@ -74,10 +74,9 @@ function show_git_branch() {
 
 PS1='\u@\h:\w$(show_git_branch)\$ '
 
-# via https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
-
 #-------------------------------------------------------------------------------
 # SSH Agent
+# + based on https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
 #-------------------------------------------------------------------------------
 
 ssh_env=${HOME}/.ssh/environment
@@ -122,7 +121,7 @@ ssh_agent_sock=${HOME}/.ssh/agent.sock
 
 case "${UNAME}" in
   Darwin)
-    # via http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
+    # based on http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
     for sock_tmp in \
      /tmp/com.apple.launchd.*/Listeners \
      /tmp/launchd-*/Listeners; do
@@ -132,7 +131,7 @@ case "${UNAME}" in
     done
     ;;
   *)
-    # via http://www.gcd.org/blog/2006/09/100/
+    # based on http://www.gcd.org/blog/2006/09/100/
     if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
       ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
       export SSH_AUTH_SOCK=${ssh_agent_sock}
