@@ -109,8 +109,7 @@ function start_ssh_agent() {
 
 if [[ -f "${ssh_env}" ]]; then
   . ${ssh_env} > /dev/null
-  # ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+  ps -p ${SSH_AGENT_PID} > /dev/null || {
     start_ssh_agent
   }
 else
