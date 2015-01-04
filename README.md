@@ -7,6 +7,7 @@ the way I want it.
 
 ```
 $ git clone https://github.com/hansode/dotfiles.git
+$ cd dotfiles
 $ make
 ```
 
