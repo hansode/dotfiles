@@ -80,7 +80,7 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 #-------------------------------------------------------------------------------
 
 ssh_env=${HOME}/.ssh/environment
-ssh_agent_keys=${HOME}/.ssh/agent_keys.${HOSTNAME}
+ssh_agent_keys=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
   # remote?
