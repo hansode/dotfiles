@@ -80,7 +80,7 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 #-------------------------------------------------------------------------------
 
 ssh_env=${HOME}/.ssh/environment
-ssh_agent_keys=${HOME}/.ssh/agent_keys.${HOSTNAME}
+ssh_agent_keys=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
   # remote?
@@ -117,7 +117,7 @@ fi
 
 # static ssh agent sock path
 
-ssh_agent_sock=${HOME}/.ssh/agent.sock
+ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
 case "${UNAME}" in
   Darwin)
