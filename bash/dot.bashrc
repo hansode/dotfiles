@@ -79,7 +79,7 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 # + based on https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
 #-------------------------------------------------------------------------------
 
-ssh_env=${HOME}/.ssh/environment
+ssh_env=${HOME}/.ssh/environment.${HOSTNAME}
 ssh_agent_keys=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
@@ -117,7 +117,7 @@ fi
 
 # static ssh agent sock path
 
-ssh_agent_sock=${HOME}/.ssh/agent.sock
+ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
 case "${UNAME}" in
   Darwin)
