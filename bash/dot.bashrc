@@ -79,10 +79,9 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 # + based on https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
 #-------------------------------------------------------------------------------
 
-ssh_env=${HOME}/.ssh/environment.${HOSTNAME}
-ssh_agent_keys=${HOME}/.ssh/agent_keys
-
 function start_ssh_agent() {
+  local ssh_env=${1:-"${HOME}/.ssh/environment.${HOSTNAME}"}
+  [[ -f "${ssh_env}" ]]
   # remote?
   [[ -z "${SSH_CLIENT}" ]] || return 0
 
@@ -90,6 +89,7 @@ function start_ssh_agent() {
   chmod 0600 ${ssh_env}
   . ${ssh_env} > /dev/null
 
+  local ssh_agent_keys=${HOME}/.ssh/agent_keys
   if [[ -f "${ssh_agent_keys}" ]]; then
     local privkey=
     while read privkey; do
@@ -106,35 +106,49 @@ function start_ssh_agent() {
 # Source SSH agent settings if it is already running, otherwise start
 # up the agent proprely.
 
-if [[ -f "${ssh_env}" ]]; then
-  . ${ssh_env} > /dev/null
-  ps -p ${SSH_AGENT_PID} > /dev/null || {
-    start_ssh_agent
-  }
-else
-  start_ssh_agent
-fi
+function handle_ssh_agent() {
+  local ssh_env=${HOME}/.ssh/environment.${HOSTNAME}
+
+  if [[ -f "${ssh_env}" ]]; then
+    . ${ssh_env} > /dev/null
+    ps -p ${SSH_AGENT_PID} > /dev/null || {
+      start_ssh_agent ${ssh_env}
+    }
+  else
+    start_ssh_agent ${ssh_env}
+  fi
+}
 
 # static ssh agent sock path
 
-ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
+function overwrite_ssh_auth_sock() {
+  local ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
-case "${UNAME}" in
-  Darwin)
-    # based on http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
-    for sock_tmp in \
-     /tmp/com.apple.launchd.*/Listeners \
-     /tmp/launchd-*/Listeners; do
-      [[ -S "${sock_tmp}" ]] || continue
-      ln -fs ${sock_tmp} ${ssh_agent_sock}
-      export SSH_AUTH_SOCK=${ssh_agent_sock}
-    done
-    ;;
-  *)
-    # based on http://www.gcd.org/blog/2006/09/100/
-    if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
-      ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
-      export SSH_AUTH_SOCK=${ssh_agent_sock}
-    fi
-    ;;
-esac
+  case "$(uname)" in
+    Darwin)
+      # based on http://rcmdnk.github.io/blog/2014/10/20/computer-mac-remote-github/
+      local sock_tmp=
+      for sock_tmp in \
+       /tmp/com.apple.launchd.*/Listeners \
+       /tmp/launchd-*/Listeners; do
+        [[ -S "${sock_tmp}" ]] || continue
+        ln -fs ${sock_tmp} ${ssh_agent_sock}
+        export SSH_AUTH_SOCK=${ssh_agent_sock}
+      done
+      ;;
+    *)
+      # based on http://www.gcd.org/blog/2006/09/100/
+      if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
+        ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
+        export SSH_AUTH_SOCK=${ssh_agent_sock}
+      fi
+      ;;
+  esac
+}
+
+function ssh_keychain() {
+  handle_ssh_agent
+  overwrite_ssh_auth_sock
+}
+
+ssh_keychain
