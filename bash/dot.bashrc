@@ -80,7 +80,6 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 #-------------------------------------------------------------------------------
 
 ssh_env=${HOME}/.ssh/environment
-ssh_agent_keys=${HOME}/.ssh/agent_keys
 
 function start_ssh_agent() {
   # remote?
@@ -89,6 +88,8 @@ function start_ssh_agent() {
   ssh-agent | sed 's/^echo/#echo/' > ${ssh_env}
   chmod 0600 ${ssh_env}
   . ${ssh_env} > /dev/null
+
+  local ssh_agent_keys=${HOME}/.ssh/agent_keys
 
   if [[ -f "${ssh_agent_keys}" ]]; then
     local privkey=
