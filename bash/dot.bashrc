@@ -117,7 +117,7 @@ fi
 
 # static ssh agent sock path
 
-ssh_agent_sock=${HOME}/.ssh/agent.sock
+ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
 case "${UNAME}" in
   Darwin)
