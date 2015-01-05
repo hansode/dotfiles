@@ -1,6 +1,9 @@
 WHOAMI=`whoami`
 
-all: documents downloads dropbox
+all: desktop documents downloads dropbox
+
+desktop:
+	if [ ! -L $(HOME)/$@ -a -d /cygdrive/c/Users/$(WHOAMI)/Desktop   ]; then ln -s /cygdrive/c/Users/$(WHOAMI)/Desktop   $(HOME)/$@; fi
 
 documents:
 	if [ ! -L $(HOME)/$@ -a -d /cygdrive/c/Users/$(WHOAMI)/Documents ]; then ln -s /cygdrive/c/Users/$(WHOAMI)/Documents $(HOME)/$@; fi
