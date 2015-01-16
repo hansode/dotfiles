@@ -34,8 +34,9 @@ case "${UNAME}" in
 esac
 
 export PATH
-export LC_ALL=C
-export LANG=C
+#export LC_ALL=C
+#export LANG=C
+export LANG=en_US.UTF-8
 export HISTTIMEFORMAT='%F %T '
 
 case "${UNAME}" in
