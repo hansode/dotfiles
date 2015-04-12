@@ -71,13 +71,11 @@ esac
 function load_completion() {
   local completion_dir=${HOME}/.bash.d/completion
   local completion_targets=${completion_dir}/targets
-  echo ${completion_targets}
 
   if [[ -f "${completion_targets}" ]]; then
     local completion=
     while read completion; do
       completion=${completion_dir}/${completion}
-      echo ${completion}
       [[ -f "${completion}" ]] || continue
       . ${completion}
     done < ${completion_targets}
