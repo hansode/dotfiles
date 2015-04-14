@@ -148,3 +148,11 @@ if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
   ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
   export SSH_AUTH_SOCK=${ssh_agent_sock}
 fi
+
+#-------------------------------------------------------------------------------
+# local-specific bashrc
+#-------------------------------------------------------------------------------
+
+if [[ -f ${HOME}/.bashrc.local ]]; then
+  . ${HOME}/.bashrc.local
+fi
