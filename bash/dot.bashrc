@@ -33,6 +33,9 @@ case "${UNAME}" in
     ;;
 esac
 
+if [[ -d /opt/axsh/wakame-vdc/client/mussel ]]; then
+  PATH=${PATH}:/opt/axsh/wakame-vdc/client/mussel
+fi
 export PATH
 #export LC_ALL=C
 #export LANG=C
