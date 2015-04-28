@@ -19,7 +19,7 @@
 (setq font-lock-maximum-decoration t)
 
 ;; scroll bar
-(menu-bar-mode nil)
+(menu-bar-mode -1)
 
 ;;不用意な改行を防ぐ
 (setq next-line-add-newlines nil)
