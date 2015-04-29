@@ -35,7 +35,7 @@ esac
 
 if [[ -d /opt/axsh/wakame-vdc ]]; then
   PATH=${PATH}:/opt/axsh/wakame-vdc/dcmgr/bin
-  PATH=${PATH}:/opt/axsh/wakame-vdc/client/mussel
+  PATH=${PATH}:/opt/axsh/wakame-vdc/client/mussel/bin
 fi
 export PATH
 #export LC_ALL=C
