@@ -81,8 +81,8 @@ function load_completion() {
     while read completion; do
       completion=${completion_dir}/${completion}
       [[ -f "${completion}" ]] || continue
-      . ${completion}
-    done < ${completion_targets}
+      . "${completion}"
+    done < "${completion_targets}"
   fi
 }
 load_completion
@@ -109,9 +109,9 @@ function start_ssh_agent() {
   # remote?
   [[ -z "${SSH_CLIENT}" ]] || return 0
 
-  ssh-agent | sed 's/^echo/#echo/' > ${ssh_env}
-  chmod 0600 ${ssh_env}
-  . ${ssh_env} > /dev/null
+  ssh-agent | sed 's/^echo/#echo/' > "${ssh_env}"
+  chmod 0600 "${ssh_env}"
+  . "${ssh_env}" > /dev/null
 
   local ssh_agent_keys=${HOME}/.ssh/agent_keys
 
@@ -119,10 +119,10 @@ function start_ssh_agent() {
     local privkey=
     while read privkey; do
       # expand a file path using "~" or "${HOME}"
-      eval privkey=${privkey}
+      eval privkey="${privkey}"
       [[ -f "${privkey}" ]] || continue
-      ssh-add ${privkey}
-    done < ${ssh_agent_keys}
+      ssh-add "${privkey}"
+    done < "${ssh_agent_keys}"
   else
     ssh-add
   fi
@@ -132,8 +132,8 @@ function start_ssh_agent() {
 # up the agent proprely.
 
 if [[ -f "${ssh_env}" ]]; then
-  . ${ssh_env} > /dev/null
-  ps -p ${SSH_AGENT_PID} > /dev/null || {
+  . "${ssh_env}" > /dev/null
+  ps -p "${SSH_AGENT_PID}" > /dev/null || {
     start_ssh_agent
   }
 else
@@ -146,14 +146,14 @@ ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
 # based on http://www.gcd.org/blog/2006/09/100/
 if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
-  ln -fs ${SSH_AUTH_SOCK} ${ssh_agent_sock}
-  export SSH_AUTH_SOCK=${ssh_agent_sock}
+  ln -fs "${SSH_AUTH_SOCK}" "${ssh_agent_sock}"
+  export SSH_AUTH_SOCK="${ssh_agent_sock}"
 fi
 
 #-------------------------------------------------------------------------------
 # local-specific bashrc
 #-------------------------------------------------------------------------------
 
-if [[ -f ${HOME}/.bashrc.local ]]; then
-  . ${HOME}/.bashrc.local
+if [[ -f "${HOME}/.bashrc.local" ]]; then
+  . "${HOME}/.bashrc.local"
 fi
