@@ -149,17 +149,19 @@ else
   start_ssh_agent
 fi
 
-# static ssh agent sock path
+function swap_ssh_agent_sock() {
+  # static ssh agent sock path
+  local ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
+  # ignore?
+  [[ "${ssh_env}" == "/dev/null" ]] && return 0
 
-ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
-
-# based on http://www.gcd.org/blog/2006/09/100/
-if [[ "${ssh_env}" != "/dev/null" ]]; then
+  # based on http://www.gcd.org/blog/2006/09/100/
   if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
     ln -fs "${SSH_AUTH_SOCK}" "${ssh_agent_sock}"
     export SSH_AUTH_SOCK="${ssh_agent_sock}"
   fi
-fi
+}
+swap_ssh_agent_sock
 
 #-------------------------------------------------------------------------------
 # local-specific bashrc
