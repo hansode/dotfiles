@@ -154,9 +154,11 @@ fi
 ssh_agent_sock=${HOME}/.ssh/agent.sock.${HOSTNAME}
 
 # based on http://www.gcd.org/blog/2006/09/100/
-if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
-  ln -fs "${SSH_AUTH_SOCK}" "${ssh_agent_sock}"
-  export SSH_AUTH_SOCK="${ssh_agent_sock}"
+if [[ "${ssh_env}" != "/dev/null" ]]; then
+  if ! [[ -L "${SSH_AUTH_SOCK}" ]] && [[ -S "${SSH_AUTH_SOCK}" ]]; then
+    ln -fs "${SSH_AUTH_SOCK}" "${ssh_agent_sock}"
+    export SSH_AUTH_SOCK="${ssh_agent_sock}"
+  fi
 fi
 
 #-------------------------------------------------------------------------------
