@@ -111,7 +111,8 @@ PS1='\u@\h:\w$(show_git_branch)\$ '
 # + based on https://github.com/mitchellh/dotfiles/blob/master/bashrc#L181-L203
 #-------------------------------------------------------------------------------
 
-ssh_env=${HOME}/.ssh/environment.${HOSTNAME}
+# if you want to disable this function, you should "ssh_env=/dev/null" in ~/.bashrc.prelocal.
+ssh_env=${ssh_env:-${HOME}/.ssh/environment.${HOSTNAME}}
 
 function start_ssh_agent() {
   # remote?
