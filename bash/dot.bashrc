@@ -51,6 +51,8 @@ export PATH
 #export LANG=C
 export LANG=en_US.UTF-8
 export HISTTIMEFORMAT='%F %T '
+export HISTSIZE=5000
+export HISTFILESIZE=10000
 
 case "${UNAME}" in
   Darwin)
