@@ -65,6 +65,9 @@ esac
 #-------------------------------------------------------------------------------
 
 case "${UNAME}" in
+  Linux)
+    alias ls='ls -F --color'
+    ;;
   CYGWIN*)
     alias ls='ls -F --color --show-control-chars'
     alias screen='screen -U'
